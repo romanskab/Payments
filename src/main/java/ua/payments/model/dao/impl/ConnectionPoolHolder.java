@@ -1,6 +1,7 @@
 package ua.payments.model.dao.impl;
 
 import org.apache.commons.dbcp.BasicDataSource;
+import ua.payments.model.Util;
 
 import javax.sql.DataSource;
 
@@ -9,12 +10,10 @@ public class ConnectionPoolHolder {
 
     public static DataSource getDataSource(){
         if (dataSource == null){
-            System.out.println("ConnectionPoolHolder: getDataSource()");
-
             BasicDataSource ds = new BasicDataSource();
-            ds.setUrl("jdbc:mysql://localhost:3306/payments");
-            ds.setUsername("root");
-            ds.setPassword("root");
+            ds.setUrl(new Util().getPropertyValue("url"));
+            ds.setUsername(new Util().getPropertyValue("username"));
+            ds.setPassword(new Util().getPropertyValue("password"));
             ds.setMinIdle(5);
             ds.setMaxIdle(10);
             ds.setMaxOpenPreparedStatements(100);
