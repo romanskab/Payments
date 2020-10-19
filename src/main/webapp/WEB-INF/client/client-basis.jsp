@@ -4,6 +4,6 @@
     <title>Client page</title>
 </head>
 <body>
-
+    Welcome to Client page !!!
 </body>
 </html>

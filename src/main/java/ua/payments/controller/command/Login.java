@@ -14,6 +14,7 @@ public class Login implements Command {
             return "/login.jsp";
         }
         // TODO go to Service
-        return "/login.jsp";
+//        return "redirect:/client/client-basis.jsp";
+        return "/WEB-INF/client/client-basis.jsp";
     }
 }
