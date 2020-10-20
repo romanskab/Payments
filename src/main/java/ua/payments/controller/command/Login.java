@@ -23,13 +23,14 @@ public class Login implements Command {
             for (User user : users) {
                 if (user.getUsername().equals(name) && user.getPassword().equals(pass)) {
                     currentUser = user;
+                    System.out.println("currentUser: " + currentUser);
+                    return "/WEB-INF/client/client-basis.jsp";
                 }
             }
         }
         // TODO go to Service
 
 //        return "redirect:/client/client-basis.jsp";
-        System.out.println("currentUser: " + currentUser);
-        return "/WEB-INF/client/client-basis.jsp";
+        return "/login.jsp";
     }
 }
