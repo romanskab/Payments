@@ -2,10 +2,10 @@ package ua.payments.model.dao.impl;
 
 import ua.payments.model.dao.UserDao;
 import ua.payments.model.entity.User;
+import ua.payments.model.entity.enums.Role;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class JDBCUserDao implements UserDao {
@@ -43,7 +43,30 @@ public class JDBCUserDao implements UserDao {
 
     @Override
     public List<User> findAll() {
-        return null;
+        final String query = "SELECT * FROM user";
+
+        try (Statement stmt = connection.createStatement()) {
+            ResultSet resultSet = stmt.executeQuery(query);
+
+            List<User> users = new ArrayList<>();
+
+            while (resultSet.next()){
+                User user = new User();
+                user.setId(resultSet.getInt("id"));
+                user.setFirstName(resultSet.getString("firstName"));
+                user.setLastName(resultSet.getString("lastName"));
+                user.setRole(Role.valueOf(resultSet.getString("role")));
+                user.setUsername(resultSet.getString("username"));
+                user.setPassword(resultSet.getString("password"));
+                users.add(user);
+            }
+
+            System.out.println("users:\n"+users);
+            return users;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
