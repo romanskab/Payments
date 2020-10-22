@@ -37,7 +37,7 @@ public class Registration implements Command {
             System.out.println(user);
 
             userService.create(user);
-            return "/login.jsp";
+            return "redirect:/login.jsp";
         }
 
 //        return "/registration.jsp";

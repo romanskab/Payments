@@ -21,4 +21,10 @@ public class UserService {
         UserDao userDao = daoFactory.createUserDao();
         return userDao.findAll();
     }
+
+    public User findByUsername(String username){
+        System.out.println("UserService: findByUsername()");
+        UserDao userDao = daoFactory.createUserDao();
+        return userDao.findByUsername(username);
+    }
 }

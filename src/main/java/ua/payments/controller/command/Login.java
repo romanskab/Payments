@@ -14,19 +14,17 @@ public class Login implements Command {
         String name = request.getParameter("username");
         String pass = request.getParameter("password");
         System.out.println(name + " " + pass);
-        User currentUser = new User();
+        User currentUser;
         if (name == null || name.equals("") || pass == null || pass.equals("")) {
             return "/login.jsp";
-        } else {
+        }
+        try{
             UserService userService = new UserService();
-            List<User> users = userService.findAll();
-            for (User user : users) {
-                if (user.getUsername().equals(name) && user.getPassword().equals(pass)) {
-                    currentUser = user;
-                    System.out.println("currentUser: " + currentUser);
-                    return "/WEB-INF/client/client-basis.jsp";
-                }
-            }
+            currentUser = userService.findByUsername(name);
+            System.out.println("currentUser: " + currentUser);
+            return "redirect:/client/client-basis.jsp";
+        }catch (java.lang.Exception e){
+            e.printStackTrace();
         }
         // TODO go to Service
 
