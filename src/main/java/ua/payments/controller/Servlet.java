@@ -1,10 +1,7 @@
 package ua.payments.controller;
 
-import ua.payments.controller.command.Command;
+import ua.payments.controller.command.*;
 import ua.payments.controller.command.Exception;
-import ua.payments.controller.command.LogOut;
-import ua.payments.controller.command.Login;
-import ua.payments.controller.command.Registration;
 import ua.payments.model.service.UserService;
 
 import javax.servlet.ServletException;
@@ -19,9 +16,10 @@ public class Servlet extends HttpServlet {
     private Map<String, Command> commands = new HashMap<>();
 
     public void init() {
-        commands.put("logout", new LogOut());
-        commands.put("login", new Login());
         commands.put("registration", new Registration(new UserService()));
+        commands.put("login", new Login());
+        commands.put("client", new Client());
+        commands.put("logout", new LogOut());
         commands.put("exception", new Exception());
     }
 

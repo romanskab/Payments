@@ -4,6 +4,7 @@ import ua.payments.model.entity.User;
 import ua.payments.model.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public class Login implements Command {
@@ -22,7 +23,9 @@ public class Login implements Command {
             UserService userService = new UserService();
             currentUser = userService.findByUsername(name);
             System.out.println("currentUser: " + currentUser);
-            return "redirect:/client/client-basis.jsp";
+            HttpSession session = request.getSession();
+            session.setAttribute("currentUser", currentUser);
+            return "redirect:/client";
         }catch (java.lang.Exception e){
             e.printStackTrace();
         }

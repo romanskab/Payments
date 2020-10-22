@@ -5,5 +5,7 @@
 </head>
 <body>
     Welcome to Client page !!!
+<p>${currentUser.firstName} ${currentUser.lastName}</p>
+<p>${currentUser.username}</p>
 </body>
 </html>
