@@ -15,17 +15,22 @@ public class Login implements Command {
         String name = request.getParameter("username");
         String pass = request.getParameter("password");
         System.out.println(name + " " + pass);
-        User currentUser;
         if (name == null || name.equals("") || pass == null || pass.equals("")) {
             return "/login.jsp";
         }
         try{
             UserService userService = new UserService();
-            currentUser = userService.findByUsername(name);
-            System.out.println("currentUser: " + currentUser);
-            HttpSession session = request.getSession();
-            session.setAttribute("currentUser", currentUser);
-            return "redirect:/client";
+            User userFromDB = userService.findByUsername(name);
+            if (userFromDB.getPassword().equals(pass)){
+                System.out.println("user: " + userFromDB);
+                HttpSession session = request.getSession();
+                userFromDB.setPassword(null);
+                session.setAttribute("user", userFromDB);
+                return "redirect:/client";
+            }else {
+                return "/login.jsp";
+            }
+
         }catch (java.lang.Exception e){
             e.printStackTrace();
         }
