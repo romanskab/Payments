@@ -4,7 +4,6 @@
     <title>Login</title>
 </head>
 <body style="margin: 0; background-color: lightgray; text-align: center">
-<%--<form action="${pageContext.request.contextPath}/app/login" method="get">--%>
 <form action="${pageContext.request.contextPath}/login" method="post">
     <b>Login</b>
     <br><br>
@@ -19,7 +18,6 @@
 </form>
 
 <br/>
-<%--<a href="${pageContext.request.contextPath}/app/logout">На головну</a>--%>
 <a href="${pageContext.request.contextPath}/logout">На головну</a>
 
 </body>

@@ -1,6 +1,7 @@
 package ua.payments.controller.command;
 
 import ua.payments.model.entity.User;
+import ua.payments.model.entity.enums.Role;
 import ua.payments.model.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,18 +16,30 @@ public class Login implements Command {
         String name = request.getParameter("username");
         String pass = request.getParameter("password");
         System.out.println(name + " " + pass);
+
         if (name == null || name.equals("") || pass == null || pass.equals("")) {
             return "/login.jsp";
         }
+
         try{
             UserService userService = new UserService();
             User userFromDB = userService.findByUsername(name);
+
             if (userFromDB.getPassword().equals(pass)){
-                System.out.println("user: " + userFromDB);
-                HttpSession session = request.getSession();
                 userFromDB.setPassword(null);
-                session.setAttribute("user", userFromDB);
-                return "redirect:/client";
+                System.out.println("user: " + userFromDB);
+
+                if (CommandUtility.checkUserIsLogged(request, name)){
+                    return "/login.jsp";
+                }
+                if (userFromDB.getRole().equals(Role.ROLE_ADMIN)){
+                    CommandUtility.setUserInSession(request, userFromDB);
+                    return "redirect:/admin";
+                }
+                if (userFromDB.getRole().equals(Role.ROLE_CLIENT)){
+                    CommandUtility.setUserInSession(request, userFromDB);
+                    return "redirect:/client";
+                }
             }else {
                 return "/login.jsp";
             }
@@ -34,9 +47,7 @@ public class Login implements Command {
         }catch (java.lang.Exception e){
             e.printStackTrace();
         }
-        // TODO go to Service
 
-//        return "redirect:/client/client-basis.jsp";
         return "/login.jsp";
     }
 }

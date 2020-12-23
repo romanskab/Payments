@@ -17,18 +17,18 @@ public class JDBCUserDao implements UserDao {
     }
 
     @Override
-    public void create(User entity) {
+    public void create(User user) {
         final String query = "INSERT INTO user" +
                 "(firstName, lastName, role, username, password) " +
                 "VALUES (?, ?, ?, ?, ?)";
 
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.clearParameters();
-            pstmt.setString(1, entity.getFirstName());
-            pstmt.setString(2, entity.getLastName());
-            pstmt.setString(3, entity.getRole().name());
-            pstmt.setString(4, entity.getUsername());
-            pstmt.setString(5, entity.getPassword());
+            pstmt.setString(1, user.getFirstName());
+            pstmt.setString(2, user.getLastName());
+            pstmt.setString(3, user.getRole().name());
+            pstmt.setString(4, user.getUsername());
+            pstmt.setString(5, user.getPassword());
             int countAdded = pstmt.executeUpdate();
             System.out.println("added - " + countAdded);
         } catch (SQLException e) {

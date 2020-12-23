@@ -1,14 +1,16 @@
 package ua.payments.model.entity;
 
 import ua.payments.model.entity.enums.Role;
+import ua.payments.model.entity.enums.State;
 
 public class User {
     private int id;
     private String firstName;
     private String lastName;
-    private Role role;
     private String username;
     private String password;
+    private Role role;
+    private State state;
 
     public User() {
     }

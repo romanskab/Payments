@@ -42,7 +42,7 @@ public class Servlet extends HttpServlet {
         path = path.replaceAll(".*/payments/", "");
         System.out.println(path);
         Command command = commands.getOrDefault(path,
-                (r) -> "/payments/index.jsp)");
+                (r) -> "/payments/index.jsp");
         String page = command.execute(request);
         System.out.println("page - " + page);
 //        request.getRequestDispatcher(page).forward(request, response);
