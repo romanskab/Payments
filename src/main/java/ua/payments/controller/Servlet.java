@@ -2,6 +2,8 @@ package ua.payments.controller;
 
 import ua.payments.controller.command.*;
 import ua.payments.controller.command.Exception;
+import ua.payments.controller.command.admin.Admin;
+import ua.payments.controller.command.client.Client;
 import ua.payments.model.service.UserService;
 
 import javax.servlet.ServletException;
@@ -17,10 +19,11 @@ public class Servlet extends HttpServlet {
 
     public void init() {
         commands.put("registration", new Registration(new UserService()));
-        commands.put("login", new Login());
-        commands.put("client", new Client());
+        commands.put("login", new LogIn());
         commands.put("logout", new LogOut());
         commands.put("exception", new Exception());
+        commands.put("client", new Client());
+        commands.put("admin", new Admin());
     }
 
     public void doGet(HttpServletRequest request,

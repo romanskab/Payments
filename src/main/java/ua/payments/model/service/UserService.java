@@ -11,9 +11,9 @@ public class UserService {
     DaoFactory daoFactory = DaoFactory.getInstance();
 
     public void create(User user){
-        System.out.println("UserService: create()");
-        UserDao userDao = daoFactory.createUserDao();
-        userDao.create(user);
+        try (UserDao userDao = daoFactory.createUserDao()) {
+            userDao.create(user);
+        }
     }
 
     public List<User> findAll(){
@@ -26,5 +26,11 @@ public class UserService {
         System.out.println("UserService: findByUsername()");
         UserDao userDao = daoFactory.createUserDao();
         return userDao.findByUsername(username);
+    }
+
+    public User findByUsernameAndPassword(String username, String password){
+        try (UserDao userDao = daoFactory.createUserDao()) {
+            return userDao.findByUsernameAndPassword(username, password);
+        }
     }
 }

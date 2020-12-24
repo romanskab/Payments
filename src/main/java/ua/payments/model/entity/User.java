@@ -3,25 +3,20 @@ package ua.payments.model.entity;
 import ua.payments.model.entity.enums.Role;
 import ua.payments.model.entity.enums.State;
 
+import java.util.List;
+import java.util.Objects;
+
 public class User {
     private int id;
-    private String firstName;
-    private String lastName;
+    private String firstname;
+    private String lastname;
     private String username;
     private String password;
     private Role role;
     private State state;
+    private List<Account> accounts;
 
     public User() {
-    }
-
-    public User(int id, String firstName, String lastName, Role role, String username, String password) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.role = role;
-        this.username = username;
-        this.password = password;
     }
 
     public int getId() {
@@ -32,28 +27,20 @@ public class User {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getLastname() {
+        return lastname;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
     public String getUsername() {
@@ -72,42 +59,61 @@ public class User {
         this.password = password;
     }
 
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
+
+    public List<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof User)) return false;
-
+        if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-
-        if (getId() != user.getId()) return false;
-        if (!getFirstName().equals(user.getFirstName())) return false;
-        if (!getLastName().equals(user.getLastName())) return false;
-        if (getRole() != user.getRole()) return false;
-        if (!getUsername().equals(user.getUsername())) return false;
-        return getPassword().equals(user.getPassword());
-
+        return id == user.id &&
+                firstname.equals(user.firstname) &&
+                lastname.equals(user.lastname) &&
+                username.equals(user.username) &&
+                password.equals(user.password) &&
+                role == user.role &&
+                state == user.state &&
+                accounts.equals(user.accounts);
     }
 
     @Override
     public int hashCode() {
-        int result = getId();
-        result = 31 * result + getFirstName().hashCode();
-        result = 31 * result + getLastName().hashCode();
-        result = 31 * result + getRole().hashCode();
-        result = 31 * result + getUsername().hashCode();
-        result = 31 * result + getPassword().hashCode();
-        return result;
+        return Objects.hash(id, firstname, lastname, username, password, role, state, accounts);
     }
 
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", role=" + role +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", role=" + role +
+                ", state=" + state +
+                ", accounts=" + accounts +
                 '}';
     }
 }

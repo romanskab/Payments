@@ -1,0 +1,33 @@
+Configuration:
+  packages: "ua.payments"
+  name: Log4j_Config
+  properties:
+    property:
+      name: log-path
+      value: C:\logs
+  #----------------------------------------------------------------------------------
+  appenders:
+    Console:
+      - name: Console_Appender
+        PatternLayout:
+          Pattern: "%highlight{%-5level}{FATAL=bg_red}  %style{%date{yyyy-MM-dd HH:mm:ss.SSS}}{blue} %class{1}:%L - %highlight{%msg} %xEx{short}%n"
+
+    RollingFile:
+      # file will be overwritten after reaching the size of 1 MB
+      - name: rolFile
+        fileName: ${log-path}/rollingFilePayments.log
+        filePattern: ${log-path}/archive/rolFilePayments.log.%d{yyyy-MM-dd-hh-mm}.gz
+        PatternLayout:
+          Pattern: "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} %class{1}:%L - %msg  %xEx{short}%n"
+        Policies:
+          SizeBasedTriggeringPolicy:
+            size: 1 MB
+  #----------------------------------------------------------------------------------
+  Loggers:
+    Root:
+      level: all
+      AppenderRef:
+        - ref: Console_Appender
+          level: all
+        - ref: rolFile
+          level: warn

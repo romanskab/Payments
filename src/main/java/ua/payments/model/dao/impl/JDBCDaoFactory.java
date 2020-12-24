@@ -13,7 +13,6 @@ public class JDBCDaoFactory extends DaoFactory {
 
     @Override
     public UserDao createUserDao() {
-        System.out.println("JDBCDaoFactory: createUserDao()");
         return new JDBCUserDao(getConnection());
     }
 
@@ -25,16 +24,6 @@ public class JDBCDaoFactory extends DaoFactory {
             throw new RuntimeException(e);
         }
 
-//        try {
-//            return DriverManager.getConnection(
-//                    "jdbc:mysql://localhost:3306/payments",
-//                    "root",
-//                    "root"
-//            );
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            throw new RuntimeException(e);
-//        }
     }
 
 }

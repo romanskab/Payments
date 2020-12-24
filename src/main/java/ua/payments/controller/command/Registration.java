@@ -3,6 +3,7 @@ package ua.payments.controller.command;
 import ua.payments.model.entity.User;
 import ua.payments.model.entity.enums.Role;
 import ua.payments.model.service.UserService;
+import ua.payments.model.util.Encryptor;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -29,10 +30,10 @@ public class Registration implements Command {
             return "/registration.jsp";
         }else {
             User user = new User();
-            user.setFirstName(firstName);
-            user.setLastName(lastName);
+            user.setFirstname(firstName);
+            user.setLastname(lastName);
             user.setUsername(username);
-            user.setPassword(password);
+            user.setPassword(Encryptor.encrypt(password));
             user.setRole(Role.ROLE_CLIENT);
             System.out.println(user);
 
@@ -40,6 +41,5 @@ public class Registration implements Command {
             return "redirect:/login.jsp";
         }
 
-//        return "/registration.jsp";
     }
 }

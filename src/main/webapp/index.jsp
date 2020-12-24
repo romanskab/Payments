@@ -18,7 +18,7 @@
 <a href="?sessionLocale=en"><fmt:message key="label.lang.en" /></a><span>  </span>
 <a href="?sessionLocale=ua"><fmt:message key="label.lang.ua" /></a>
 
-<h1>Payments.ua</h1>
+<h1>payments.ua</h1>
 <br>
 <h4>
     <fmt:message key="label.select"/>
@@ -34,13 +34,6 @@
         <fmt:message key="label.register"/>
     </button>
 </form>
-
-<%--<br/>--%>
-<%--<a href="${pageContext.request.contextPath}/login">Login</a>--%>
-<%--<br/>--%>
-<%--<a href="${pageContext.request.contextPath}/registration">Registration form</a>--%>
-<%--<br>--%>
-<%--<a href="${pageContext.request.contextPath}/exception">Exception</a>--%>
 
 </body>
 </html>

@@ -1,24 +1,43 @@
+<!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page isELIgnored="false" %>
+<%@ page session="true" %>
+
+<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setBundle basename="messages"/>
+
+<html lang="${sessionScope.lang}">
 <head>
     <title>Login</title>
 </head>
-<body style="margin: 0; background-color: lightgray; text-align: center">
+<body>
+<a href="?sessionLocale=en"><fmt:message key="label.lang.en" /></a><span>  </span>
+<a href="?sessionLocale=ua"><fmt:message key="label.lang.ua" /></a>
+
 <form action="${pageContext.request.contextPath}/login" method="post">
-    <b>Login</b>
+    <h4><fmt:message key="label.login"/></h4>
+    <br>
+    <fmt:message key="label.Username"/>: <input name="username"/>
     <br><br>
-    <input type="radio" name="role" value="ROLE_ADMIN"/>admin
-    <input type="radio" name="role" value="ROLE_CLIENT" checked/>client
+    <fmt:message key="label.Password"/>: <input name="password" type="password" min=1/>
     <br><br>
-    Username: <input name="username"/>
-    <br><br>
-    Password: <input name="password" type="password" min=1/>
-    <br><br>
-    <input type="submit" value="Submit"/>
+    <button>
+        <fmt:message key="label.login"/>
+    </button>
 </form>
 
-<br/>
-<a href="${pageContext.request.contextPath}/logout">На головну</a>
+<br/><br>
+<a href="${pageContext.request.contextPath}/index.jsp"><fmt:message key="label.StartPage"/></a>
 
 </body>
+<style>
+    body {
+        margin: 0;
+        background-color: lightgray;
+        text-align: center;
+        padding-top: 10px;
+    }
+</style>
 </html>

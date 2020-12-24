@@ -12,11 +12,11 @@
 </head>
 <body style="margin: 0; background-color: lightgray; text-align: center">
 
-<a href="?sessionLocale=en"><fmt:message key="label.lang.en" /></a><span>  </span>
-<a href="?sessionLocale=ua"><fmt:message key="label.lang.ua" /></a>
+<a href="?sessionLocale=en"><fmt:message key="label.lang.en"/></a><span>  </span>
+<a href="?sessionLocale=ua"><fmt:message key="label.lang.ua"/></a>
 
 <form action="${pageContext.request.contextPath}/registration" method="post">
-    <b><fmt:message key="label.ClientRegistration"/></b>
+    <h4><fmt:message key="label.ClientRegistration"/></h4>
     <br><br>
     <fmt:message key="label.Name"/>: <input name="firstName"/>
     <br><br>
@@ -27,13 +27,19 @@
     <br><br>
     <fmt:message key="label.Password"/>: <input name="password" type="password" min=1/>
     <br><br>
-    <fmt:message key="label.Confirm"/>: <input name="confirmPassword" type="password" min=1/>
-    <br><br>
     <input type="submit" value="<fmt:message key="label.register"/>"/>
 </form>
 
 <br>
-<a href="${pageContext.request.contextPath}/index.jsp">Index</a>
+<a href="${pageContext.request.contextPath}/index.jsp"><fmt:message key="label.StartPage"/></a>
 
 </body>
+<style>
+    body {
+        margin: 0;
+        background-color: lightgray;
+        text-align: center;
+        padding-top: 10px;
+    }
+</style>
 </html>

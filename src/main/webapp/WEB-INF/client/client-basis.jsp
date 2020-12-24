@@ -5,7 +5,7 @@
 </head>
 <body>
     Welcome to Client page !!!
-<p>${user.firstName} ${user.lastName}</p>
+<p>${user.firstname} ${user.lastname}</p>
 <p>${user.username}</p>
 </body>
 </html>

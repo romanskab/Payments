@@ -1,4 +1,4 @@
-package ua.payments.model;
+package ua.payments.model.util;
 
 import java.io.IOException;
 import java.io.InputStream;

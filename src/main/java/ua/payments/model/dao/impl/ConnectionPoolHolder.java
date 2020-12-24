@@ -1,7 +1,7 @@
 package ua.payments.model.dao.impl;
 
 import org.apache.commons.dbcp.BasicDataSource;
-import ua.payments.model.Util;
+import ua.payments.model.util.Util;
 
 import javax.sql.DataSource;
 
