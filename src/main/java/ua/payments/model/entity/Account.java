@@ -7,8 +7,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Account {
-    private int id;
-    private String number;
+    private long id;
     private BigDecimal balance;
     private State state;
     private User user;
@@ -18,20 +17,12 @@ public class Account {
     public Account() {
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
     }
 
     public BigDecimal getBalance() {
@@ -80,7 +71,6 @@ public class Account {
         if (o == null || getClass() != o.getClass()) return false;
         Account account = (Account) o;
         return id == account.id &&
-                number.equals(account.number) &&
                 balance.equals(account.balance) &&
                 state == account.state &&
                 user.equals(account.user) &&
@@ -90,14 +80,13 @@ public class Account {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, number, balance, state, user, cards, payments);
+        return Objects.hash(id, balance, state, user, cards, payments);
     }
 
     @Override
     public String toString() {
         return "Account{" +
                 "id=" + id +
-                ", number='" + number + '\'' +
                 ", balance=" + balance +
                 ", state=" + state +
                 ", user=" + user +

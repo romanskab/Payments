@@ -6,8 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Card {
-    private int id;
-    private String number;
+    private long id;
     private Account account;
     private State state;
     private List<Payment> payments;
@@ -15,20 +14,12 @@ public class Card {
     public Card() {
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
     }
 
     public Account getAccount() {
@@ -61,7 +52,6 @@ public class Card {
         if (o == null || getClass() != o.getClass()) return false;
         Card card = (Card) o;
         return id == card.id &&
-                number.equals(card.number) &&
                 account.equals(card.account) &&
                 state == card.state &&
                 payments.equals(card.payments);
@@ -69,14 +59,13 @@ public class Card {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, number, account, state, payments);
+        return Objects.hash(id, account, state, payments);
     }
 
     @Override
     public String toString() {
         return "Card{" +
                 "id=" + id +
-                ", number='" + number + '\'' +
                 ", account=" + account +
                 ", state=" + state +
                 ", payments=" + payments +

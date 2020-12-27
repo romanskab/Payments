@@ -7,6 +7,10 @@ public abstract class DaoFactory {
 
     public abstract UserDao createUserDao();
 
+    public abstract AccountDao createAccountDao();
+
+    public abstract CardDao createCardDao();
+
     public static DaoFactory getInstance(){
         if (daoFactory == null){
             synchronized (DaoFactory.class){
@@ -18,4 +22,6 @@ public abstract class DaoFactory {
         }
         return daoFactory;
     }
+
+
 }

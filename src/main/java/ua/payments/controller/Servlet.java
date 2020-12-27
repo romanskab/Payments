@@ -1,9 +1,11 @@
 package ua.payments.controller;
 
-import ua.payments.controller.command.*;
 import ua.payments.controller.command.Exception;
+import ua.payments.controller.command.*;
 import ua.payments.controller.command.admin.Admin;
-import ua.payments.controller.command.client.Client;
+import ua.payments.controller.command.admin.AdminListClientsCommand;
+import ua.payments.controller.command.admin.AdminListRequestsCommand;
+import ua.payments.controller.command.client.*;
 import ua.payments.model.service.UserService;
 
 import javax.servlet.ServletException;
@@ -23,7 +25,14 @@ public class Servlet extends HttpServlet {
         commands.put("logout", new LogOut());
         commands.put("exception", new Exception());
         commands.put("client", new Client());
+        commands.put("client/accounts", new ClientListAccountsCommand());
+        commands.put("client/accounts/create", new ClientCreateAccountCommand());
+        commands.put("client/payments", new ClientListPaymentsCommand());
+        commands.put("client/cards", new ClientListCardsCommand());
+        commands.put("client/cards/create", new ClientCreateCardCommand());
         commands.put("admin", new Admin());
+        commands.put("admin/clients", new AdminListClientsCommand());
+        commands.put("admin/requests", new AdminListRequestsCommand());
     }
 
     public void doGet(HttpServletRequest request,
@@ -48,7 +57,6 @@ public class Servlet extends HttpServlet {
                 (r) -> "/payments/index.jsp");
         String page = command.execute(request);
         System.out.println("page - " + page);
-//        request.getRequestDispatcher(page).forward(request, response);
         if (page.contains("redirect:")) {
             response.sendRedirect(page.replace("redirect:", "/payments"));
         } else {

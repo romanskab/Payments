@@ -1,14 +1,19 @@
 package ua.payments.model.dao.impl;
 
 import org.apache.commons.dbcp.BasicDataSource;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ua.payments.model.util.Util;
 
 import javax.sql.DataSource;
 
 public class ConnectionPoolHolder {
+    private static final Logger logger = LogManager.getLogger(ConnectionPoolHolder.class);
+
     private static volatile DataSource dataSource;
 
     public static DataSource getDataSource(){
+        logger.info("getDataSource() started!");
         if (dataSource == null){
             BasicDataSource ds = new BasicDataSource();
             ds.setUrl(new Util().getPropertyValue("url"));

@@ -6,27 +6,25 @@ CREATE TABLE user
     username  VARCHAR(64) NOT NULL UNIQUE,
     password  VARCHAR(64) NOT NULL,
     role      VARCHAR(32),
-    state     VARCHAR(32)
+    state     VARCHAR(32) NOT NULL DEFAULT 'UNBLOCKED'
 );
 
 CREATE TABLE account
 (
-    id      INT PRIMARY KEY AUTO_INCREMENT,
-    number  VARCHAR(64) NOT NULL,
-    balance DECIMAL,
-    state   VARCHAR(32),
+    id      BIGINT PRIMARY KEY AUTO_INCREMENT,
+    balance DECIMAL DEFAULT 0,
+    state   VARCHAR(32) NOT NULL DEFAULT 'UNBLOCKED',
     user_id INT,
     FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE RESTRICT
-);
+) AUTO_INCREMENT=2620330000000001;
 
 CREATE TABLE card
 (
-    id         INT PRIMARY KEY AUTO_INCREMENT,
-    number     VARCHAR(64) NOT NULL,
-    state      VARCHAR(32),
-    account_id INT,
+    id         BIGINT PRIMARY KEY AUTO_INCREMENT,
+    state      VARCHAR(32) NOT NULL DEFAULT 'UNBLOCKED',
+    account_id BIGINT,
     FOREIGN KEY (account_id) REFERENCES account (id) ON DELETE RESTRICT
-);
+) AUTO_INCREMENT=5168000000000001;
 
 CREATE TABLE payment
 (
@@ -35,8 +33,8 @@ CREATE TABLE payment
     comment      VARCHAR(128),
     status       VARCHAR(32),
     lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    account_id   INT,
-    card_id      INT,
+    account_id   BIGINT,
+    card_id      BIGINT,
     FOREIGN KEY (account_id) REFERENCES account (id) ON DELETE RESTRICT,
     FOREIGN KEY (card_id) REFERENCES card (id) ON DELETE RESTRICT
 );

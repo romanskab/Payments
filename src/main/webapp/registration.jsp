@@ -10,7 +10,7 @@
 <head>
     <title>Register</title>
 </head>
-<body style="margin: 0; background-color: lightgray; text-align: center">
+<body>
 
 <a href="?sessionLocale=en"><fmt:message key="label.lang.en"/></a><span>  </span>
 <a href="?sessionLocale=ua"><fmt:message key="label.lang.ua"/></a>

@@ -1,5 +1,8 @@
 package ua.payments.controller.filters;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import ua.payments.exception.ForbiddenException;
 import ua.payments.model.entity.User;
 import ua.payments.model.entity.enums.Role;
 
@@ -8,8 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.stream.Stream;
 
 public class AuthFilter implements Filter {
+    private static final Logger logger = LogManager.getLogger(AuthFilter.class);
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
     }
@@ -18,27 +24,48 @@ public class AuthFilter implements Filter {
     public void doFilter(ServletRequest request,
                          ServletResponse response,
                          FilterChain filterChain) throws IOException, ServletException {
-        System.out.println("AuthFilter:");
         final HttpServletRequest req = (HttpServletRequest) request;
         final HttpServletResponse res = (HttpServletResponse) response;
 
         HttpSession session = req.getSession();
         ServletContext context = request.getServletContext();
-        System.out.println(session);
-        System.out.println(session.getAttribute("user"));
-        System.out.println(context.getAttribute("loggedUsers"));
 
         String path = req.getRequestURI();
-        System.out.println("path: " + path);
+        logger.info("path: " + path);
 
-        if (session.getAttribute("user") != null && path.equals("/payments/")){
-            User user = (User) session.getAttribute("user");
-            System.out.println(user.getRole().toString());
-            if (user.getRole().equals(Role.ROLE_CLIENT)){
-                ((HttpServletResponse) response).sendRedirect("/payments/client");
+        if (session.getAttribute("user") == null) {
+            Stream<String> urls = Stream.of(
+                    "/payments/",
+                    "/payments/registration.jsp",
+                    "/payments/login.jsp",
+                    "/payments/registration",
+                    "/payments/login");
+            if (urls.noneMatch(path::equals)) {
+                HttpServletResponse resp = (HttpServletResponse) response;
+                resp.sendRedirect("/payments/");
+                return;
             }
-            if (user.getRole().equals(Role.ROLE_ADMIN)){
-                ((HttpServletResponse) response).sendRedirect("/payments/admin");
+
+        }
+
+        if (session.getAttribute("user") != null && !path.equals("/payments/logout")) {
+            User user = (User) session.getAttribute("user");
+            logger.info("current user: " + user);
+
+            Role role = user.getRole();
+            String roleInStringPathFormat = role.name().toLowerCase().substring(5);
+
+            if (path.equals("/payments/")) {
+                HttpServletResponse resp = (HttpServletResponse) response;
+                resp.sendRedirect("/payments/" + roleInStringPathFormat);
+                return;
+            }
+
+            String pathForAccess = path.replace("/payments/", "");
+            if (!pathForAccess.startsWith(roleInStringPathFormat)){
+                ForbiddenException exception = new ForbiddenException("User doesn't have access to the resource");
+                logger.info("Access denied !!!", exception);
+                throw exception;
             }
         }
 
