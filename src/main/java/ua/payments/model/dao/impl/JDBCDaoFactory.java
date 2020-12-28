@@ -35,7 +35,7 @@ public class JDBCDaoFactory extends DaoFactory {
         logger.info("getConnection() started");
         try {
             Connection connection = dataSource.getConnection();
-            System.out.println("got connection successful: " + connection);
+            logger.info("got connection successful: " + connection);
             return connection;
         } catch (SQLException e) {
             e.printStackTrace();

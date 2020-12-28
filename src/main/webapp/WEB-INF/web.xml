@@ -6,6 +6,13 @@
          version="3.1">
     <display-name>Payments Application</display-name>
 
+    <resource-ref>
+        <description>Database for app</description>
+        <res-ref-name>jdbc/payments</res-ref-name>
+        <res-type>javax.sql.DataSource</res-type>
+        <res-auth>Container</res-auth>
+    </resource-ref>
+
     <servlet>
         <servlet-name>ServletName</servlet-name>
         <servlet-class>ua.payments.controller.Servlet</servlet-class>
