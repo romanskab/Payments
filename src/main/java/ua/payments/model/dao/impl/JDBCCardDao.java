@@ -4,17 +4,25 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.payments.exception.DaoOperationException;
 import ua.payments.model.dao.CardDao;
+import ua.payments.model.entity.Account;
 import ua.payments.model.entity.Card;
+import ua.payments.model.entity.enums.State;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class JDBCCardDao implements CardDao {
     private static final Logger logger = LogManager.getLogger(JDBCCardDao.class);
 
     private static final String INSERT_CARD_SQL = "INSERT INTO card(account_id) VALUE (?)";
+    private static final String SELECT_BY_ACCOUNT_ID_SQL = "SELECT * FROM card WHERE account_id = ?";
+    private static final String SELECT_BY_ID_SQL = "SELECT card.*, account.balance AS balance FROM card " +
+            "JOIN account ON card.account_id = account.id\n" +
+            "WHERE card.id = ?";
 
     private Connection connection;
 
@@ -26,7 +34,6 @@ public class JDBCCardDao implements CardDao {
     public void createForAccount(long accountId) {
         logger.info("createForAccount() started!");
         try (PreparedStatement ps = connection.prepareStatement(INSERT_CARD_SQL)) {
-            logger.info("try started!");
             ps.clearParameters();
             ps.setLong(1, accountId);
             int countAdded = ps.executeUpdate();
@@ -40,7 +47,48 @@ public class JDBCCardDao implements CardDao {
 
     @Override
     public List<Card> findByAccountId(long accountId) {
-        return null;
+        try (PreparedStatement ps = connection.prepareStatement(SELECT_BY_ACCOUNT_ID_SQL)) {
+            ps.clearParameters();
+            ps.setLong(1, accountId);
+            ResultSet rs = ps.executeQuery();
+            List<Card> cards = new ArrayList<>();
+            while (rs.next()) {
+                Card card = new Card();
+                card.setId(rs.getLong("id"));
+                card.setState(State.valueOf(rs.getString("state")));
+                cards.add(card);
+            }
+            logger.info("found cards: " + cards);
+            return cards;
+        } catch (SQLException e) {
+            DaoOperationException exception = new DaoOperationException("Cannot find cards", e);
+            logger.error("findByAccountId() failed", exception);
+            throw exception;
+        }
+    }
+
+    @Override
+    public Card findById(long cardId) {
+        try (PreparedStatement ps = connection.prepareStatement(SELECT_BY_ID_SQL)) {
+            ps.clearParameters();
+            ps.setLong(1, cardId);
+            ResultSet rs = ps.executeQuery();
+            Card card = new Card();
+            if (rs.next()) {
+                card.setId(rs.getLong("id"));
+                card.setState(State.valueOf(rs.getString("state")));
+                Account account = new Account();
+                account.setId(rs.getLong("account_id"));
+                account.setBalance(rs.getBigDecimal("balance"));
+                card.setAccount(account);
+            }
+            logger.info("found card: " + card);
+            return card;
+        } catch (SQLException e) {
+            DaoOperationException exception = new DaoOperationException("Cannot find card", e);
+            logger.error("findById() failed", exception);
+            throw exception;
+        }
     }
 
     @Override

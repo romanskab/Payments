@@ -8,7 +8,6 @@ import java.util.Objects;
 
 public class Payment {
     private int id;
-    private User user;
     private BigDecimal sum;
     private String comment;
     private Status status;
@@ -25,14 +24,6 @@ public class Payment {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public BigDecimal getSum() {
@@ -89,7 +80,6 @@ public class Payment {
         if (o == null || getClass() != o.getClass()) return false;
         Payment payment = (Payment) o;
         return id == payment.id &&
-                user.equals(payment.user) &&
                 sum.equals(payment.sum) &&
                 comment.equals(payment.comment) &&
                 status == payment.status &&
@@ -100,14 +90,13 @@ public class Payment {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, user, sum, comment, status, lastModified, account, card);
+        return Objects.hash(id, sum, comment, status, lastModified, account, card);
     }
 
     @Override
     public String toString() {
         return "Payment{" +
                 "id=" + id +
-                ", user=" + user +
                 ", sum=" + sum +
                 ", comment='" + comment + '\'' +
                 ", status=" + status +

@@ -43,5 +43,8 @@
         <fmt:message key="label.CreateNewAccount"/>
     </button>
 </form>
+
+<br><br><br>
+<a href="${pageContext.request.contextPath}/logout"><fmt:message key="label.logout"/></a>
 </body>
 </html>

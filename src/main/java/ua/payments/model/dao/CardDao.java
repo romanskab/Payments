@@ -8,4 +8,6 @@ public interface CardDao extends GenericDao {
     void createForAccount(long accountId);
 
     List<Card> findByAccountId(long accountId);
+
+    Card findById(long cardId);
 }

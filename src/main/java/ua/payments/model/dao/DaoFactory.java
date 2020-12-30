@@ -8,15 +8,16 @@ public abstract class DaoFactory {
     public abstract UserDao createUserDao();
     public abstract AccountDao createAccountDao();
     public abstract CardDao createCardDao();
+    public abstract PaymentDao createPaymentDao();
 
     public static DaoFactory getInstance(){
         if (daoFactory == null){
-//            synchronized (DaoFactory.class){
+            synchronized (DaoFactory.class){
                 if (daoFactory == null){
                     DaoFactory temp = new JDBCDaoFactory();
                     daoFactory = temp;
                 }
-//            }
+            }
         }
         return daoFactory;
     }

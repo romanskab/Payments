@@ -3,6 +3,7 @@ package ua.payments.controller;
 import ua.payments.controller.command.Exception;
 import ua.payments.controller.command.*;
 import ua.payments.controller.command.admin.Admin;
+import ua.payments.controller.command.admin.AdminAccountUnblock;
 import ua.payments.controller.command.admin.AdminListClientsCommand;
 import ua.payments.controller.command.admin.AdminListRequestsCommand;
 import ua.payments.controller.command.client.*;
@@ -27,12 +28,18 @@ public class Servlet extends HttpServlet {
         commands.put("client", new Client());
         commands.put("client/accounts", new ClientListAccountsCommand());
         commands.put("client/accounts/create", new ClientCreateAccountCommand());
+        commands.put("client/accounts/replenishment", new ClientAccountReplenishment());
+        commands.put("client/accounts/block", new ClientAccountBlock());
+        commands.put("client/accounts/unblock", new ClientRequestToUnblock());
         commands.put("client/payments", new ClientListPaymentsCommand());
-        commands.put("client/cards", new ClientListCardsCommand());
+        commands.put("client/payments/new", new ClientPaymentCommand());
+        commands.put("client/payments/send", new ClientSendPayment());
+        commands.put("client/cards", new ClientCardCommand());
         commands.put("client/cards/create", new ClientCreateCardCommand());
         commands.put("admin", new Admin());
         commands.put("admin/clients", new AdminListClientsCommand());
         commands.put("admin/requests", new AdminListRequestsCommand());
+        commands.put("admin/accounts/unblock", new AdminAccountUnblock());
     }
 
     public void doGet(HttpServletRequest request,
@@ -51,7 +58,7 @@ public class Servlet extends HttpServlet {
 
         String path = request.getRequestURI();
         System.out.println("RequestURI - " + path);
-        path = path.replaceAll(".*/payments/", "");
+        path = path.replaceFirst("/payments/", "");
         System.out.println(path);
         Command command = commands.getOrDefault(path,
                 (r) -> "/payments/index.jsp");

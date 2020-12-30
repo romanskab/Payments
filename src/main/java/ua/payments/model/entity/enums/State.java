@@ -1,5 +1,5 @@
 package ua.payments.model.entity.enums;
 
 public enum State {
-    BLOCKED, UNBLOCKED
+    BLOCKED, UNBLOCKED, WAITING_TO_UNBLOCK
 }

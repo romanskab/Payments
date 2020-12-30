@@ -15,14 +15,42 @@
 <a href="?sessionLocale=en&account-id=${account.id}"><fmt:message key="label.lang.en"/></a><span>  </span>
 <a href="?sessionLocale=ua&account-id=${account.id}"><fmt:message key="label.lang.ua"/></a>
 <br><br>
-
-<fmt:message key="label.account"/>: ${account.id}
+<b><fmt:message key="label.account"/></b>: ${account.id}
 <br>
-<fmt:message key="label.balance"/>: ${account.balance}
+<b><fmt:message key="label.balance"/></b>: ${account.balance}
 <br>
-<fmt:message key="label.state"/>: ${account.state}
+<b><fmt:message key="label.state"/></b>: ${account.state}
+<br>
+<b><a href="${pageContext.request.contextPath}/client/payments?account-id=${account.id}"><fmt:message
+        key="label.Payments"/></a></b>
 <br><br>
-<fmt:message key="label.Cards"/>:
+<form action="${pageContext.request.contextPath}/client/accounts/replenishment">
+    <input hidden type="number" name="account-id" value="${account.id}">
+    <button>
+        <fmt:message key="label.Replenishment"/>
+    </button>
+</form>
+
+<br>
+<c:if test="${account.state == 'UNBLOCKED'}">
+    <form action="${pageContext.request.contextPath}/client/accounts/block">
+        <input hidden name="account-id" value="${account.id}">
+        <button>
+            <fmt:message key="label.BlockAccount"/>
+        </button>
+    </form>
+</c:if>
+<c:if test="${account.state == 'BLOCKED'}">
+    <form action="${pageContext.request.contextPath}/client/accounts/unblock">
+        <input hidden name="account-id" value="${account.id}">
+        <button>
+            <fmt:message key="label.RequestToUnblock"/>
+        </button>
+    </form>
+</c:if>
+
+<br><br>
+<b><fmt:message key="label.Cards"/></b>:
 
 <table>
     <thead>
@@ -33,10 +61,11 @@
     </thead>
     <tbody>
     <c:forEach var="card" items="${cards}">
-            <tr>
-                <td><a href="${pageContext.request.contextPath}/client/accounts/cards?card-id=${card.id}"><c:out value="${card.id}"/></a></td>
-                <td><c:out value="${card.state}"/></td>
-            </tr>
+        <tr>
+            <td><a href="${pageContext.request.contextPath}/client/cards?card-id=${card.id}"><c:out
+                    value="${card.id}"/></a></td>
+            <td><c:out value="${card.state}"/></td>
+        </tr>
     </c:forEach>
     </tbody>
 </table>
@@ -49,5 +78,10 @@
     </button>
 </form>
 
+<br><br>
+<a href="${pageContext.request.contextPath}/client/accounts"><fmt:message key="label.Accounts"/></a>
+
+<br><br><br>
+<a href="${pageContext.request.contextPath}/logout"><fmt:message key="label.logout"/></a>
 </body>
 </html>

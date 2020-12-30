@@ -2,10 +2,7 @@ package ua.payments.model.dao.impl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ua.payments.model.dao.AccountDao;
-import ua.payments.model.dao.CardDao;
-import ua.payments.model.dao.DaoFactory;
-import ua.payments.model.dao.UserDao;
+import ua.payments.model.dao.*;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -31,11 +28,14 @@ public class JDBCDaoFactory extends DaoFactory {
         return new JDBCCardDao(getConnection());
     }
 
+    @Override
+    public PaymentDao createPaymentDao() {
+        return new JDBCPaymentDao(getConnection());
+    }
+
     private Connection getConnection() {
-        logger.info("getConnection() started");
         try {
             Connection connection = dataSource.getConnection();
-            logger.info("got connection successful: " + connection);
             return connection;
         } catch (SQLException e) {
             e.printStackTrace();
