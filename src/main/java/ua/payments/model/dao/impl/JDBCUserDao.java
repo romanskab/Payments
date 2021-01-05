@@ -6,6 +6,7 @@ import ua.payments.exception.DaoOperationException;
 import ua.payments.model.dao.UserDao;
 import ua.payments.model.entity.User;
 import ua.payments.model.entity.enums.Role;
+import ua.payments.model.entity.enums.State;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -105,6 +106,7 @@ public class JDBCUserDao implements UserDao {
         user.setLastname(rs.getString("lastname"));
         user.setUsername(rs.getString("username"));
         user.setRole(Role.valueOf(rs.getString("role")));
+        user.setState(State.valueOf(rs.getString("state")));
         return user;
     }
 

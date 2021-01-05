@@ -5,6 +5,8 @@ import org.apache.logging.log4j.Logger;
 import ua.payments.controller.command.Command;
 import ua.payments.model.entity.Account;
 import ua.payments.model.entity.Payment;
+import ua.payments.model.entity.User;
+import ua.payments.model.entity.enums.State;
 import ua.payments.model.entity.enums.Status;
 import ua.payments.model.service.AccountService;
 import ua.payments.model.service.PaymentService;
@@ -27,10 +29,15 @@ public class ClientSendPayment implements Command {
         logger.info("payment - " + payment);
         final BigDecimal sum = payment.getSum();
         final BigDecimal balance = payment.getAccount().getBalance();
-        if (sum.compareTo(balance) > 0){
-            logger.info("sum > balance");
+        final State stateAccount = payment.getAccount().getState();
+        logger.info("stateAccount - " + stateAccount);
+        User user = (User) request.getSession().getAttribute("user");
+        final State stateUser = user.getState();
+        logger.info("stateUser - " + stateUser);
+        if (sum.compareTo(balance) > 0 || stateAccount.equals(State.BLOCKED) || stateUser.equals(State.BLOCKED)) {
+            logger.info("sum > balance or state is BLOCKED !!!");
             paymentService.changeStatus(payment.getId(), Status.REJECTED);
-        }else {
+        } else {
             logger.info("sum <= balance");
             accountService.decreaseBalance(payment.getAccount().getId(), sum, payment.getId());
         }

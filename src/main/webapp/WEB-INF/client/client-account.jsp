@@ -80,6 +80,8 @@
 
 <br><br>
 <a href="${pageContext.request.contextPath}/client/accounts"><fmt:message key="label.Accounts"/></a>
+<br><br>
+<a href="${pageContext.request.contextPath}/client"><fmt:message key="label.ClientPage"/></a>
 
 <br><br><br>
 <a href="${pageContext.request.contextPath}/logout"><fmt:message key="label.logout"/></a>

@@ -15,20 +15,6 @@
 <a href="?sessionLocale=en&account-id=${account.id}"><fmt:message key="label.lang.en"/></a><span>  </span>
 <a href="?sessionLocale=ua&account-id=${account.id}"><fmt:message key="label.lang.ua"/></a>
 <br><br>
-<fmt:message key="label.account"/>: ${account.id}
-<br>
-<fmt:message key="label.balance"/>: ${account.balance}
-<br>
-<fmt:message key="label.state"/>: ${account.state}
-<br><br>
-
-<form action="${pageContext.request.contextPath}/client/payments/new">
-    <input hidden type="number" name="account-id" value="${account.id}">
-    <button>
-        <fmt:message key="label.NewPayment"/>
-    </button>
-</form>
-<br>
 
 <b><fmt:message key="label.Payments"/>:</b>
 <table>

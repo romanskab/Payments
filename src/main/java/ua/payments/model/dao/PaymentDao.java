@@ -11,6 +11,10 @@ public interface PaymentDao extends GenericDao{
 
     List<Payment> findByAccountId(long accountId);
 
+    List<Payment> findByUserId(int userId);
+
+    List<Payment> findAll();
+
     Payment findById(int id);
 
     void changeStatus(int paymentId, Status status);

@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 import ua.payments.controller.command.Command;
 import ua.payments.model.entity.Account;
 import ua.payments.model.entity.Payment;
+import ua.payments.model.entity.User;
 import ua.payments.model.service.AccountService;
 import ua.payments.model.service.PaymentService;
 
@@ -23,6 +24,16 @@ public class ClientListPaymentsCommand implements Command {
         logger.info("execute() started!");
         String accountId = request.getParameter("account-id");
         logger.info("accountId - " + accountId);
+
+        if (accountId == null || accountId.equals("")){
+            final User user = (User) request.getSession().getAttribute("user");
+            System.out.println(user);
+            final int userId = user.getId();
+            final List<Payment> payments = paymentService.findByUserId(userId);
+            request.setAttribute("payments", payments);
+            return "/WEB-INF/client/client-allPayments.jsp";
+        }
+
         Account account = accountService.findById(Long.parseLong(accountId));
         request.setAttribute("account", account);
         final List<Payment> payments = paymentService.findByAccountId(Long.parseLong(accountId));

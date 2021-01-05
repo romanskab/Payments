@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 public class AdminAccountUnblock implements Command {
     private static final Logger logger = LogManager.getLogger(AdminListRequestsCommand.class);
 
-    private AccountService accountService = new AccountService();
+    private final AccountService accountService = new AccountService();
 
     @Override
     public String execute(HttpServletRequest request) {

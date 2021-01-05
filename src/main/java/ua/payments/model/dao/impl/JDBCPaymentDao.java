@@ -9,10 +9,7 @@ import ua.payments.model.entity.Payment;
 import ua.payments.model.entity.enums.State;
 import ua.payments.model.entity.enums.Status;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +19,11 @@ public class JDBCPaymentDao implements PaymentDao {
     private static final String INSERT_PAYMENT_SQL = "INSERT INTO payment(sum, comment, account_id) " +
             "VALUES (?, ?, ?)";
     private static final String SELECT_BY_ACCOUNT_ID_SQL = "SELECT * FROM payment WHERE account_id = ?";
+    private static final String SELECT_BY_USER_ID_SQL = "SELECT * FROM payment " +
+            "JOIN account ON account.id = payment.account_id " +
+            "JOIN user ON user.id = account.user_id " +
+            "WHERE user_id = ?";
+    private static final String SELECT_ALL_SQL = "SELECT * FROM payment";
     private static final String SELECT_BY_ID_SQL = "SELECT payment.*, " +
             "account.id, account.balance, account.state FROM payment " +
             "JOIN account ON account.id = payment.account_id " +
@@ -85,8 +87,26 @@ public class JDBCPaymentDao implements PaymentDao {
     }
 
     @Override
-    public List findAll() {
-        return null;
+    public List<Payment> findAll() {
+        logger.info("findAll() started!");
+        try (Statement statement = connection.createStatement()) {
+            final ResultSet rs = statement.executeQuery(SELECT_ALL_SQL);
+            List<Payment> payments = new ArrayList<>();
+            while (rs.next()) {
+                Payment payment = new Payment();
+                payment.setId(rs.getInt("id"));
+                payment.setStatus(Status.valueOf(rs.getString("status")));
+                payment.setSum(rs.getBigDecimal("sum"));
+                payment.setComment(rs.getString("comment"));
+                payments.add(payment);
+            }
+            logger.info("found payments: " + payments);
+            return payments;
+        } catch (SQLException e) {
+            DaoOperationException exception = new DaoOperationException("Cannot find payments", e);
+            logger.error("findAll() failed", exception);
+            throw exception;
+        }
     }
 
     @Override
@@ -141,6 +161,30 @@ public class JDBCPaymentDao implements PaymentDao {
         } catch (SQLException e) {
             DaoOperationException exception = new DaoOperationException("Cannot find payments", e);
             logger.error("findByAccountId() failed", exception);
+            throw exception;
+        }
+    }
+
+    @Override
+    public List<Payment> findByUserId(int userId) {
+        try (PreparedStatement ps = connection.prepareStatement(SELECT_BY_USER_ID_SQL)) {
+            ps.clearParameters();
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+            List<Payment> payments = new ArrayList<>();
+            while (rs.next()) {
+                Payment payment = new Payment();
+                payment.setId(rs.getInt("id"));
+                payment.setStatus(Status.valueOf(rs.getString("status")));
+                payment.setSum(rs.getBigDecimal("sum"));
+                payment.setComment(rs.getString("comment"));
+                payments.add(payment);
+            }
+            logger.info("found payments: " + payments);
+            return payments;
+        } catch (SQLException e) {
+            DaoOperationException exception = new DaoOperationException("Cannot find payments", e);
+            logger.error("findByUserId() failed", exception);
             throw exception;
         }
     }

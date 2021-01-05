@@ -20,6 +20,10 @@ public class JDBCCardDao implements CardDao {
 
     private static final String INSERT_CARD_SQL = "INSERT INTO card(account_id) VALUE (?)";
     private static final String SELECT_BY_ACCOUNT_ID_SQL = "SELECT * FROM card WHERE account_id = ?";
+    private static final String SELECT_BY_USER_ID_SQL = "SELECT * FROM card " +
+            "JOIN account ON account.id = card.account_id " +
+            "JOIN user ON user.id = account.user_id " +
+            "WHERE user_id = ?";
     private static final String SELECT_BY_ID_SQL = "SELECT card.*, account.balance AS balance FROM card " +
             "JOIN account ON card.account_id = account.id\n" +
             "WHERE card.id = ?";
@@ -63,6 +67,28 @@ public class JDBCCardDao implements CardDao {
         } catch (SQLException e) {
             DaoOperationException exception = new DaoOperationException("Cannot find cards", e);
             logger.error("findByAccountId() failed", exception);
+            throw exception;
+        }
+    }
+
+    @Override
+    public List<Card> findByUserId(int userId) {
+        try (PreparedStatement ps = connection.prepareStatement(SELECT_BY_USER_ID_SQL)) {
+            ps.clearParameters();
+            ps.setLong(1, userId);
+            ResultSet rs = ps.executeQuery();
+            List<Card> cards = new ArrayList<>();
+            while (rs.next()) {
+                Card card = new Card();
+                card.setId(rs.getLong("id"));
+                card.setState(State.valueOf(rs.getString("state")));
+                cards.add(card);
+            }
+            logger.info("found cards: " + cards);
+            return cards;
+        } catch (SQLException e) {
+            DaoOperationException exception = new DaoOperationException("Cannot find cards", e);
+            logger.error("findByUserId() failed", exception);
             throw exception;
         }
     }

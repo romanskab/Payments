@@ -22,6 +22,12 @@ public class PaymentService {
         }
     }
 
+    public List<Payment> findByUserId(int userId){
+        try (PaymentDao paymentDao = daoFactory.createPaymentDao()) {
+            return paymentDao.findByUserId(userId);
+        }
+    }
+
     public Payment findById(int id){
         try (PaymentDao paymentDao = daoFactory.createPaymentDao()) {
             return paymentDao.findById(id);

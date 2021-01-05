@@ -26,6 +26,13 @@ public class CardService {
         }
     }
 
+    public List<Card> findByUserId(int userId){
+        logger.info("findByUserId() started!");
+        try (CardDao cardDao = daoFactory.createCardDao()) {
+            return cardDao.findByUserId(userId);
+        }
+    }
+
     public Card findById(long cardId){
         logger.info("findById() started!");
         try (CardDao cardDao = daoFactory.createCardDao()) {

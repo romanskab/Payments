@@ -19,8 +19,7 @@ import java.util.List;
 public class JDBCAccountDao implements AccountDao {
     private static final Logger logger = LogManager.getLogger(JDBCAccountDao.class);
 
-    private static final String INSERT_ACCOUNT_SQL = "INSERT INTO account(user_id) " +
-            "VALUE (?)";
+    private static final String INSERT_ACCOUNT_SQL = "INSERT INTO account(user_id) VALUE (?)";
     private static final String SELECT_BY_USER_ID_SQL = "SELECT * FROM account WHERE user_id = ?";
     private static final String SELECT_BY_ID_SQL = "SELECT * FROM account WHERE id = ?";
     private static final String SELECT_BY_ID_AND_USER_ID_SQL = "SELECT * FROM account WHERE id = ? AND user_id = ?";

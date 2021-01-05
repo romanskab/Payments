@@ -12,20 +12,28 @@
     <title>Client</title>
 </head>
 <body>
-<a href="?sessionLocale=en&account-id=${accountId}"><fmt:message key="label.lang.en"/></a><span>  </span>
-<a href="?sessionLocale=ua&account-id=${accountId}"><fmt:message key="label.lang.ua"/></a>
-
+<a href="?sessionLocale=en"><fmt:message key="label.lang.en"/></a><span>  </span>
+<a href="?sessionLocale=ua"><fmt:message key="label.lang.ua"/></a>
 <br><br>
-<form action="${pageContext.request.contextPath}/client/accounts/replenishment" method="post">
-    <b><fmt:message key="label.Replenishment"/> ${accountId}</b>
-    <input hidden type="number" name="account-id" value="${accountId}">
-    <br>
-    <fmt:message key="label.Sum"/>: <input name="sum" type="number" min="0" step="0.01"/>
-    <br><br>
-    <button>
-        <fmt:message key="label.replenish"/>
-    </button>
-</form>
+
+<b><fmt:message key="label.Cards"/></b>:
+<table>
+    <thead>
+    <tr>
+        <th><fmt:message key="label.card"/></th>
+        <th><fmt:message key="label.state"/></th>
+    </tr>
+    </thead>
+    <tbody>
+    <c:forEach var="card" items="${cards}">
+        <tr>
+            <td><a href="${pageContext.request.contextPath}/client/cards?card-id=${card.id}"><c:out
+                    value="${card.id}"/></a></td>
+            <td><c:out value="${card.state}"/></td>
+        </tr>
+    </c:forEach>
+    </tbody>
+</table>
 
 <br><br>
 <a href="${pageContext.request.contextPath}/client/accounts"><fmt:message key="label.Accounts"/></a>

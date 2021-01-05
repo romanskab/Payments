@@ -9,5 +9,7 @@ public interface CardDao extends GenericDao {
 
     List<Card> findByAccountId(long accountId);
 
+    List<Card> findByUserId(int userId);
+
     Card findById(long cardId);
 }
