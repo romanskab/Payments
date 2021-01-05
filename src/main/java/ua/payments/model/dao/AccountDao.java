@@ -12,6 +12,8 @@ public interface AccountDao extends GenericDao<Account> {
 
     List<Account> findByClientId(int clientId);
 
+    List<Account> findByClientIdAndSortByField(int userId, String field);
+
     Account findById(long id);
 
     Account findByIdAndUserId(long id, int userId);

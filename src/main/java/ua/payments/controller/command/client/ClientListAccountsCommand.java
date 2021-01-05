@@ -22,11 +22,9 @@ public class ClientListAccountsCommand implements Command {
     public String execute(HttpServletRequest request) {
         logger.info("execute() started!");
         User user = (User) request.getSession().getAttribute("user");
-        List<Account> accounts = accountService.findByClientId(user.getId());
-        request.setAttribute("accounts", accounts);
 
         String accountId = request.getParameter("account-id");
-        System.out.println("parameter" + accountId);
+        logger.info("accountId - " + accountId);
 
         if (accountId != null) {
             Account account = accountService.findById(Long.valueOf(accountId));
@@ -35,6 +33,16 @@ public class ClientListAccountsCommand implements Command {
             request.setAttribute("cards", cards);
             return "/WEB-INF/client/client-account.jsp";
         }
+
+        final String sortParameter = request.getParameter("sort-by");
+        List<Account> accounts;
+        if (sortParameter != null && !sortParameter.equals("")) {
+            logger.info("sortParameter - " + sortParameter);
+            accounts = accountService.findByClientIdAndSortByField(user.getId(), sortParameter);
+        } else {
+            accounts = accountService.findByClientId(user.getId());
+        }
+        request.setAttribute("accounts", accounts);
 
         return "/WEB-INF/client/client-listAccounts.jsp";
     }

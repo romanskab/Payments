@@ -23,6 +23,12 @@ public class AccountService {
         }
     }
 
+    public List<Account> findByClientIdAndSortByField(int clientId, String field) {
+        try (AccountDao accountDao = daoFactory.createAccountDao()) {
+            return accountDao.findByClientIdAndSortByField(clientId, field);
+        }
+    }
+
     public Account findById(long accountId) {
         try (AccountDao accountDao = daoFactory.createAccountDao()) {
             return accountDao.findById(accountId);

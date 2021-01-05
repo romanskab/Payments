@@ -16,7 +16,9 @@
 <a href="?sessionLocale=ua"><fmt:message key="label.lang.ua"/></a>
 <br><br>
 <b><fmt:message key="label.Accounts"/>:</b>
-
+<br><fmt:message key="label.sortBy"/>:
+<a href="?sort-by=account.id">№</a> ,
+<a href="?sort-by=account.balance"><fmt:message key="label.balance"/></a>
 <table>
     <thead>
     <tr>
