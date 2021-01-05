@@ -17,23 +17,32 @@
 <br><br>
 
 <b><fmt:message key="label.Payments"/>:</b>
+<br><fmt:message key="label.sortBy"/>:
+<a href="?sort-by=payment.id">№</a>
+ , <fmt:message key="label.Date/Time"/>
+(<a href="?sort-by=lastModified">&#8593</a> <a href="?sort-by=lastModified DESC">&#8595</a>)
+
 <table>
     <thead>
     <tr>
-        <th>№</th>
+        <th><fmt:message key="label.account"/></th>
+        <th><fmt:message key="label.Date/Time"/></th>
         <th><fmt:message key="label.Status"/></th>
-        <th><fmt:message key="label.Sum"/></th>
+        <th>№</th>
         <th><fmt:message key="label.Comment"/></th>
+        <th><fmt:message key="label.Sum"/></th>
     </tr>
     </thead>
     <tbody>
     <c:forEach var="payment" items="${payments}">
         <form action="${pageContext.request.contextPath}/client/payments/send" method="post">
             <tr>
-                <td><c:out value="${payment.id}"/></td>
+                <td><c:out value="${payment.account.id}"/></td>
+                <td><c:out value="${payment.lastModified}"/></td>
                 <td><c:out value="${payment.status}"/></td>
-                <td><c:out value="${payment.sum}"/></td>
+                <td><c:out value="${payment.id}"/></td>
                 <td><c:out value="${payment.comment}"/></td>
+                <td><c:out value="${payment.sum}"/></td>
                 <td><c:if test="${payment.status != 'PAID'}">
                     <input hidden name="payment-id" value="${payment.id}">
                     <button><fmt:message key="label.send"/></button>

@@ -24,12 +24,21 @@ public class ClientListPaymentsCommand implements Command {
         logger.info("execute() started!");
         String accountId = request.getParameter("account-id");
         logger.info("accountId - " + accountId);
+        final String sortParameter = request.getParameter("sort-by");
 
-        if (accountId == null || accountId.equals("")){
+        if (accountId == null || accountId.equals("")) {
             final User user = (User) request.getSession().getAttribute("user");
-            System.out.println(user);
             final int userId = user.getId();
-            final List<Payment> payments = paymentService.findByUserId(userId);
+            logger.info("userId - " + userId);
+
+            List<Payment> payments;
+            if (sortParameter != null && !sortParameter.equals("")) {
+                logger.info("sortParameter - " + sortParameter);
+                payments = paymentService.findByUserIdAndSortByField(userId, sortParameter);
+            } else {
+                payments = paymentService.findByUserId(userId);
+            }
+
             request.setAttribute("payments", payments);
             return "/WEB-INF/client/client-allPayments.jsp";
         }

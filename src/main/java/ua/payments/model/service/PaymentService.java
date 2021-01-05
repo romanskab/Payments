@@ -28,6 +28,12 @@ public class PaymentService {
         }
     }
 
+    public List<Payment> findByUserIdAndSortByField(int userId, String field){
+        try (PaymentDao paymentDao = daoFactory.createPaymentDao()) {
+            return paymentDao.findByUserAndSortByField(userId, field);
+        }
+    }
+
     public Payment findById(int id){
         try (PaymentDao paymentDao = daoFactory.createPaymentDao()) {
             return paymentDao.findById(id);
