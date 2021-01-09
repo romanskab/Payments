@@ -2,10 +2,7 @@ package ua.payments.controller;
 
 import ua.payments.controller.command.Exception;
 import ua.payments.controller.command.*;
-import ua.payments.controller.command.admin.Admin;
-import ua.payments.controller.command.admin.AdminAccountUnblock;
-import ua.payments.controller.command.admin.AdminListClientsCommand;
-import ua.payments.controller.command.admin.AdminListRequestsCommand;
+import ua.payments.controller.command.admin.*;
 import ua.payments.controller.command.client.*;
 import ua.payments.model.service.UserService;
 
@@ -38,6 +35,8 @@ public class Servlet extends HttpServlet {
         commands.put("client/cards/create", new ClientCreateCardCommand());
         commands.put("admin", new Admin());
         commands.put("admin/clients", new AdminListClientsCommand());
+        commands.put("admin/clients/block", new AdminClientBlockCommand());
+        commands.put("admin/clients/unblock", new AdminClientUnblockCommand());
         commands.put("admin/requests", new AdminListRequestsCommand());
         commands.put("admin/accounts/unblock", new AdminAccountUnblock());
     }

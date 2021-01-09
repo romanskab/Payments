@@ -43,5 +43,11 @@
     </c:forEach>
     </tbody>
 </table>
+
+<br><br>
+<a href="${pageContext.request.contextPath}/admin"><fmt:message key="label.AdminPage"/></a>
+
+<br><br><br>
+<a href="${pageContext.request.contextPath}/logout"><fmt:message key="label.logout"/></a>
 </body>
 </html>

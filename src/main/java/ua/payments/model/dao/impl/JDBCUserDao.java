@@ -21,6 +21,8 @@ public class JDBCUserDao implements UserDao {
             "WHERE username = ? AND password = ?;";
     private static final String SELECT_USER_BY_USERNAME = "SELECT * FROM user WHERE username = ?";
     private static final String SELECT_ALL_USERS = "SELECT * FROM user";
+    private static final String SELECT_ALL_BY_ROLE_SQL = "SELECT * FROM user WHERE role = ?";
+    private static final String UPDATE_STATE_SQL = "UPDATE user SET state = ? WHERE id = ?";
 
     private Connection connection;
 
@@ -84,6 +86,49 @@ public class JDBCUserDao implements UserDao {
         } catch (SQLException e) {
             DaoOperationException exception = new DaoOperationException("Cannot find user by username and password", e);
             logger.error("findByUsernameAndPassword() failed", exception);
+            throw exception;
+        }
+    }
+
+    @Override
+    public List<User> findByRole(Role role) {
+        try (PreparedStatement pstmt = connection.prepareStatement(SELECT_ALL_BY_ROLE_SQL)) {
+            pstmt.clearParameters();
+            pstmt.setString(1, role.name());
+            ResultSet resultSet = pstmt.executeQuery();
+
+            List<User> users = new ArrayList<>();
+            while (resultSet.next()) {
+                User user = new User();
+                user.setId(resultSet.getInt("id"));
+                user.setFirstname(resultSet.getString("firstname"));
+                user.setLastname(resultSet.getString("lastname"));
+                user.setRole(Role.valueOf(resultSet.getString("role")));
+                user.setUsername(resultSet.getString("username"));
+                user.setPassword(resultSet.getString("password"));
+                user.setState(State.valueOf(resultSet.getString("state")));
+                users.add(user);
+            }
+            logger.info("found users: " + users);
+            return users;
+        } catch (SQLException e) {
+            DaoOperationException exception = new DaoOperationException("Cannot find users by role", e);
+            logger.error("findByRole() failed", exception);
+            throw exception;
+        }
+    }
+
+    @Override
+    public void changeState(State state,int userId) {
+        try (PreparedStatement ps = connection.prepareStatement(UPDATE_STATE_SQL)) {
+            ps.clearParameters();
+            ps.setString(1, state.name());
+            ps.setLong(2, userId);
+            int countUpdated = ps.executeUpdate();
+            logger.info("Updated - " + countUpdated + " user");
+        } catch (SQLException e) {
+            DaoOperationException exception = new DaoOperationException("Cannot change state", e);
+            logger.error("changeState() failed", exception);
             throw exception;
         }
     }
