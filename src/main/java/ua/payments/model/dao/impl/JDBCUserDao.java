@@ -22,6 +22,7 @@ public class JDBCUserDao implements UserDao {
     private static final String SELECT_USER_BY_USERNAME = "SELECT * FROM user WHERE username = ?";
     private static final String SELECT_ALL_USERS = "SELECT * FROM user";
     private static final String SELECT_ALL_BY_ROLE_SQL = "SELECT * FROM user WHERE role = ?";
+    private static final String SELECT_ALL_BY_ID_SQL = "SELECT * FROM user WHERE id = ?";
     private static final String UPDATE_STATE_SQL = "UPDATE user SET state = ? WHERE id = ?";
 
     private Connection connection;
@@ -48,7 +49,28 @@ public class JDBCUserDao implements UserDao {
 
     @Override
     public User findById(int id) {
-        return null;
+        try (PreparedStatement pstmt = connection.prepareStatement(SELECT_ALL_BY_ID_SQL)) {
+            pstmt.clearParameters();
+            pstmt.setInt(1, id);
+            ResultSet resultSet = pstmt.executeQuery();
+
+            User user = new User();
+            while (resultSet.next()) {
+                user.setId(resultSet.getInt("id"));
+                user.setFirstname(resultSet.getString("firstname"));
+                user.setLastname(resultSet.getString("lastname"));
+                user.setRole(Role.valueOf(resultSet.getString("role")));
+                user.setUsername(resultSet.getString("username"));
+                user.setPassword(resultSet.getString("password"));
+                user.setState(State.valueOf(resultSet.getString("state")));
+            }
+            logger.info("found user: " + user);
+            return user;
+        } catch (SQLException e) {
+            DaoOperationException exception = new DaoOperationException("Cannot find user by id", e);
+            logger.error("findById() failed", exception);
+            throw exception;
+        }
     }
 
     public User findByUsername(String username) {

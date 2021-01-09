@@ -12,37 +12,37 @@
     <title>Admin</title>
 </head>
 <body>
-<a href="?sessionLocale=en"><fmt:message key="label.lang.en"/></a><span>  </span>
-<a href="?sessionLocale=ua"><fmt:message key="label.lang.ua"/></a>
+<a href="?sessionLocale=en&client-id=${client.id}"><fmt:message key="label.lang.en"/></a><span>  </span>
+<a href="?sessionLocale=ua&client-id=${client.id}"><fmt:message key="label.lang.ua"/></a>
 <br><br>
-
-<b><fmt:message key="label.Clients"/>:</b>
+<b><fmt:message key="label.Client"/>:</b> ${client.firstname} ${client.lastname}
+<br><br>
+<b><fmt:message key="label.Accounts"/>:</b>
 <table>
     <thead>
     <tr>
-        <th>№</th>
-        <th><fmt:message key="label.Name"/></th>
+        <th><fmt:message key="label.account"/></th>
+        <th><fmt:message key="label.balance"/></th>
         <th><fmt:message key="label.state"/></th>
     </tr>
     </thead>
     <tbody>
-    <c:forEach var="client" items="${clients}">
+    <c:forEach var="account" items="${accounts}">
         <tr>
-            <td><c:out value="${client.id}"/></td>
+            <td><c:out value="${account.id}"/></td>
+            <td><c:out value="${account.balance}"/></td>
+            <td><c:out value="${account.state}"/></td>
             <td>
-                <a href="${pageContext.request.contextPath}/admin/clients?client-id=${client.id}">
-                <c:out value="${client.firstname}"/> <c:out value="${client.lastname}"/></a>
-            </td>
-            <td><c:out value="${client.state}"/></td>
-            <td>
-                <c:if test="${client.state == 'UNBLOCKED'}">
-                    <form action="${pageContext.request.contextPath}/admin/clients/block">
+                <c:if test="${account.state == 'UNBLOCKED'}">
+                    <form action="${pageContext.request.contextPath}/admin/clients/account/block">
+                        <input hidden name="account-id" value="${account.id}">
                         <input hidden name="client-id" value="${client.id}">
                         <button>block</button>
                     </form>
                 </c:if>
-                <c:if test="${client.state == 'BLOCKED'}">
-                    <form action="${pageContext.request.contextPath}/admin/clients/unblock">
+                <c:if test="${account.state == 'BLOCKED'}">
+                    <form action="${pageContext.request.contextPath}/admin/clients/account/unblock">
+                        <input hidden name="account-id" value="${account.id}">
                         <input hidden name="client-id" value="${client.id}">
                         <button>unblock</button>
                     </form>

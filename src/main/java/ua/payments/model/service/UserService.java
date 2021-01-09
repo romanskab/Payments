@@ -45,4 +45,10 @@ public class UserService {
             userDao.changeState(state, userId);
         }
     }
+
+    public User findById(int id){
+        try (UserDao userDao = daoFactory.createUserDao()) {
+            return userDao.findById(id);
+        }
+    }
 }

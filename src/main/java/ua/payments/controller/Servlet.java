@@ -37,6 +37,8 @@ public class Servlet extends HttpServlet {
         commands.put("admin/clients", new AdminListClientsCommand());
         commands.put("admin/clients/block", new AdminClientBlockCommand());
         commands.put("admin/clients/unblock", new AdminClientUnblockCommand());
+        commands.put("admin/clients/account/block", new AdminClientAccountBlock());
+        commands.put("admin/clients/account/unblock", new AdminClientAccountUnblock());
         commands.put("admin/requests", new AdminListRequestsCommand());
         commands.put("admin/accounts/unblock", new AdminAccountUnblock());
     }
