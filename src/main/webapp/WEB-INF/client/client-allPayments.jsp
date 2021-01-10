@@ -2,6 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix = "mytag" uri = "/WEB-INF/tld/mytaglib.tld"%>
 <%@ page isELIgnored="false" %>
 <%@ page session="true" %>
 
@@ -38,7 +39,11 @@
         <form action="${pageContext.request.contextPath}/client/payments/send" method="post">
             <tr>
                 <td><c:out value="${payment.account.id}"/></td>
-                <td><c:out value="${payment.lastModified}"/></td>
+                <td>
+                    <mytag:DateTimeView>
+                        ${payment.lastModified}
+                    </mytag:DateTimeView>
+                </td>
                 <td><c:out value="${payment.status}"/></td>
                 <td><c:out value="${payment.id}"/></td>
                 <td><c:out value="${payment.comment}"/></td>
