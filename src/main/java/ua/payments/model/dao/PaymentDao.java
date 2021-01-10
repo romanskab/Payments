@@ -13,7 +13,13 @@ public interface PaymentDao extends GenericDao{
 
     List<Payment> findByUserId(int userId);
 
+    int findCountByUserId(int userId);
+
+    List<Payment> findByUserIdAndPagination(int userId, int offset, int limit);
+
     List<Payment> findByUserAndSortByField(int userId, String field);
+
+    List<Payment> findByUserAndSortByFieldAndPagination(int userId, String field, int offset, int limit);
 
     List<Payment> findAll();
 

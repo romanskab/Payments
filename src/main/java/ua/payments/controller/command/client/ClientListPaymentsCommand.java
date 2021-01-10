@@ -26,6 +26,8 @@ public class ClientListPaymentsCommand implements Command {
         logger.info("accountId - " + accountId);
         final String sortParameter = request.getParameter("sort-by");
 
+        final int LIMIT = 10;
+
         if (accountId == null || accountId.equals("")) {
             final User user = (User) request.getSession().getAttribute("user");
             final int userId = user.getId();
@@ -34,9 +36,60 @@ public class ClientListPaymentsCommand implements Command {
             List<Payment> payments;
             if (sortParameter != null && !sortParameter.equals("")) {
                 logger.info("sortParameter - " + sortParameter);
-                payments = paymentService.findByUserIdAndSortByField(userId, sortParameter);
+                final int count = paymentService.findCountByUserId(userId);
+                logger.info("count - " + count);
+
+                final int currentPage;
+                final String chosenPage = request.getParameter("page");
+                if (chosenPage == null || chosenPage.equals("")) {
+                    currentPage = 1;
+                } else {
+                    currentPage = Integer.parseInt(chosenPage);
+                }
+                if (count > LIMIT) {
+                    request.setAttribute("page", currentPage);
+                }
+                if (count > LIMIT * currentPage) {
+                    int next = currentPage + 1;
+                    logger.info("next - " + next);
+                    request.setAttribute("next", next);
+                }
+                if (currentPage > 1) {
+                    int previous = currentPage - 1;
+                    logger.info("previous - " + previous);
+                    request.setAttribute("previous", previous);
+                }
+                final int offset = (currentPage - 1) * LIMIT;
+
+                payments = paymentService.findByUserAndSortByFieldAndPagination(userId, sortParameter, offset, LIMIT);
+                request.setAttribute("sort", sortParameter);
             } else {
-                payments = paymentService.findByUserId(userId);
+                final int count = paymentService.findCountByUserId(userId);
+                logger.info("count - " + count);
+
+                final int currentPage;
+                final String chosenPage = request.getParameter("page");
+                if (chosenPage == null || chosenPage.equals("")) {
+                    currentPage = 1;
+                } else {
+                    currentPage = Integer.parseInt(chosenPage);
+                }
+                if (count > LIMIT) {
+                    request.setAttribute("page", currentPage);
+                }
+                if (count > LIMIT * currentPage) {
+                    int next = currentPage + 1;
+                    logger.info("next - " + next);
+                    request.setAttribute("next", next);
+                }
+                if (currentPage > 1) {
+                    int previous = currentPage - 1;
+                    logger.info("previous - " + previous);
+                    request.setAttribute("previous", previous);
+                }
+                final int offset = (currentPage - 1) * LIMIT;
+
+                payments = paymentService.findByUserIdAndPagination(userId, offset, LIMIT);
             }
 
             request.setAttribute("payments", payments);

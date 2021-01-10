@@ -12,8 +12,8 @@
     <title>Client</title>
 </head>
 <body>
-<a href="?sessionLocale=en&account-id=${account.id}"><fmt:message key="label.lang.en"/></a><span>  </span>
-<a href="?sessionLocale=ua&account-id=${account.id}"><fmt:message key="label.lang.ua"/></a>
+<a href="?sessionLocale=en&account-id=${account.id}&page=${page}"><fmt:message key="label.lang.en"/></a><span>  </span>
+<a href="?sessionLocale=ua&account-id=${account.id}&page=${page}"><fmt:message key="label.lang.ua"/></a>
 <br><br>
 
 <b><fmt:message key="label.Payments"/>:</b>
@@ -53,7 +53,19 @@
     </tbody>
 </table>
 
-<br><br>
+<br>
+<c:if test="${page != null && page != ''}">
+    pages:
+</c:if>
+<c:if test="${previous != null && previous != ''}">
+    <a href="?page=${previous}&sort-by=${sort}">&#8592</a>
+</c:if>
+${page}
+<c:if test="${next != null && next != ''}">
+    <a href="?page=${next}&sort-by=${sort}">&#8594</a>
+</c:if>
+
+<br><br><br>
 <a href="${pageContext.request.contextPath}/client/accounts"><fmt:message key="label.Accounts"/></a>
 <br><br>
 <a href="${pageContext.request.contextPath}/client"><fmt:message key="label.ClientPage"/></a>

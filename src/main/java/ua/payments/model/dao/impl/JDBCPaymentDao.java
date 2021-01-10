@@ -23,6 +23,11 @@ public class JDBCPaymentDao implements PaymentDao {
             "JOIN account ON account.id = payment.account_id " +
             "JOIN user ON user.id = account.user_id " +
             "WHERE user_id = ?";
+    private static final String SELECT_BY_USER_ID_AND_PAGINATION_SQL = "SELECT * FROM payment " +
+            "JOIN account ON account.id = payment.account_id " +
+            "JOIN user ON user.id = account.user_id " +
+            "WHERE user_id = ? " +
+            "LIMIT ?, ?";
     private static final String SELECT_BY_USER_ID_AND_SORT_BY_FIELD_SQL = "SELECT * FROM payment " +
             "JOIN account ON account.id = payment.account_id " +
             "JOIN user ON user.id = account.user_id " +
@@ -34,6 +39,11 @@ public class JDBCPaymentDao implements PaymentDao {
             "JOIN account ON account.id = payment.account_id " +
             "WHERE payment.id = ?";
     private static final String UPDATE_STATUS_SQL = "UPDATE payment SET status = ? WHERE id = ?";
+
+    private static final String COUNT_BY_USER_ID_SQL = "SELECT COUNT(1) count FROM payment " +
+            "JOIN account ON account.id = payment.account_id " +
+            "JOIN user ON user.id = account.user_id " +
+            "WHERE user_id = ?";
 
     private Connection connection;
 
@@ -200,10 +210,92 @@ public class JDBCPaymentDao implements PaymentDao {
     }
 
     @Override
+    public int findCountByUserId(int userId) {
+        try (PreparedStatement ps = connection.prepareStatement(COUNT_BY_USER_ID_SQL)) {
+            ps.clearParameters();
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+            int count = 0;
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+            logger.info("count: " + count);
+            return count;
+        } catch (SQLException e) {
+            DaoOperationException exception = new DaoOperationException("Cannot find count", e);
+            logger.error("findCountByUserId() failed", exception);
+            throw exception;
+        }
+    }
+
+    @Override
+    public List<Payment> findByUserIdAndPagination(int userId, int offset, int limit) {
+        try (PreparedStatement ps = connection.prepareStatement(SELECT_BY_USER_ID_AND_PAGINATION_SQL)) {
+            ps.clearParameters();
+            ps.setInt(1, userId);
+            ps.setInt(2, offset);
+            ps.setInt(3, limit);
+            ResultSet rs = ps.executeQuery();
+            List<Payment> payments = new ArrayList<>();
+            while (rs.next()) {
+                Payment payment = new Payment();
+                payment.setId(rs.getInt("id"));
+                payment.setStatus(Status.valueOf(rs.getString("status")));
+                payment.setSum(rs.getBigDecimal("sum"));
+                payment.setComment(rs.getString("comment"));
+                payment.setLastModified(rs.getTimestamp("lastModified"));
+                Account account = new Account();
+                account.setId(rs.getLong("account_id"));
+                payment.setAccount(account);
+                payments.add(payment);
+            }
+            logger.info("found payments: " + payments);
+            return payments;
+        } catch (SQLException e) {
+            DaoOperationException exception = new DaoOperationException("Cannot find payments", e);
+            logger.error("findByUserId() failed", exception);
+            throw exception;
+        }
+    }
+
+    @Override
     public List<Payment> findByUserAndSortByField(int userId, String field) {
         logger.info("userId - " + userId);
         logger.info("field - " + field);
         try (PreparedStatement ps = connection.prepareStatement(SELECT_BY_USER_ID_AND_SORT_BY_FIELD_SQL + field)) {
+            ps.clearParameters();
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+            List<Payment> payments = new ArrayList<>();
+            while (rs.next()) {
+                Payment payment = new Payment();
+                payment.setId(rs.getInt("id"));
+                payment.setStatus(Status.valueOf(rs.getString("status")));
+                payment.setSum(rs.getBigDecimal("sum"));
+                payment.setComment(rs.getString("comment"));
+                payment.setLastModified(rs.getTimestamp("lastModified"));
+                Account account = new Account();
+                account.setId(rs.getLong("account_id"));
+                payment.setAccount(account);
+                payments.add(payment);
+            }
+            logger.info("found payments: " + payments);
+            return payments;
+        } catch (SQLException e) {
+            DaoOperationException exception = new DaoOperationException("Cannot find payments", e);
+            logger.error("findByUserId() failed", exception);
+            throw exception;
+        }
+    }
+
+    @Override
+    public List<Payment> findByUserAndSortByFieldAndPagination(int userId, String field, int offset, int limit) {
+        logger.info("userId - " + userId);
+        logger.info("field - " + field);
+        logger.info("offset - " + offset);
+        logger.info("limit - " + limit);
+        try (PreparedStatement ps = connection.prepareStatement(SELECT_BY_USER_ID_AND_SORT_BY_FIELD_SQL + field +
+                " LIMIT " + offset + ", " + limit)) {
             ps.clearParameters();
             ps.setInt(1, userId);
             ResultSet rs = ps.executeQuery();

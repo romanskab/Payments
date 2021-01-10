@@ -28,9 +28,27 @@ public class PaymentService {
         }
     }
 
+    public int findCountByUserId(int userId){
+        try (PaymentDao paymentDao = daoFactory.createPaymentDao()) {
+            return paymentDao.findCountByUserId(userId);
+        }
+    }
+
+    public List<Payment> findByUserIdAndPagination(int userId, int offset, int limit){
+        try (PaymentDao paymentDao = daoFactory.createPaymentDao()) {
+            return paymentDao.findByUserIdAndPagination(userId,offset,limit);
+        }
+    }
+
     public List<Payment> findByUserIdAndSortByField(int userId, String field){
         try (PaymentDao paymentDao = daoFactory.createPaymentDao()) {
             return paymentDao.findByUserAndSortByField(userId, field);
+        }
+    }
+
+    public List<Payment> findByUserAndSortByFieldAndPagination(int userId, String field, int offset, int limit){
+        try (PaymentDao paymentDao = daoFactory.createPaymentDao()) {
+            return paymentDao.findByUserAndSortByFieldAndPagination(userId, field, offset, limit);
         }
     }
 
