@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page isELIgnored="false" %>
 <%@ page session="true" %>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="h" %>
 
 <fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="messages"/>
@@ -35,5 +36,6 @@
     </button>
 </form>
 
+<h:footer></h:footer>
 </body>
 </html>
