@@ -9,6 +9,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashSet;
 
+/**
+ * This class contains some useful utility methods
+ *
+ * @author Roman Skab
+ * @version 1.0
+ */
 public class CommandUtility {
     private static final Logger logger = LogManager.getLogger(CommandUtility.class);
 

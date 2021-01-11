@@ -14,6 +14,12 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This class meets all requests.
+ *
+ * @author Roman Skab
+ * @version 1.0
+ */
 public class Servlet extends HttpServlet {
     private Map<String, Command> commands = new HashMap<>();
 

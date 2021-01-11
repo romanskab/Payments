@@ -13,6 +13,12 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class is DAO-class for Payment-class
+ *
+ * @author Roman Skab
+ * @version 1.0
+ */
 public class JDBCPaymentDao implements PaymentDao {
     private static final Logger logger = LogManager.getLogger(JDBCPaymentDao.class);
 

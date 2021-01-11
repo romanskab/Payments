@@ -8,6 +8,12 @@ import ua.payments.model.entity.enums.State;
 import java.math.BigDecimal;
 import java.util.List;
 
+/**
+ * This service-class is the way to AccountDao
+ *
+ * @author Roman Skab
+ * @version 1.0
+ */
 public class AccountService {
     DaoFactory daoFactory = DaoFactory.getInstance();
 

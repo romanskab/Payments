@@ -5,6 +5,12 @@ import ua.payments.model.entity.enums.State;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * This class represents Card of a client
+ *
+ * @author Roman Skab
+ * @version 1.0
+ */
 public class Card {
     private long id;
     private Account account;

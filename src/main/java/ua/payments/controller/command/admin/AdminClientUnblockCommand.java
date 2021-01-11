@@ -11,6 +11,12 @@ import ua.payments.model.service.UserService;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+/**
+ * This class is used for unblocking of clients.
+ *
+ * @author Roman Skab
+ * @version 1.0
+ */
 public class AdminClientUnblockCommand implements Command {
     private static final Logger logger = LogManager.getLogger(AdminListClientsCommand.class);
 

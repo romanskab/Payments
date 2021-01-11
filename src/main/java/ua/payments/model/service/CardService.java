@@ -8,6 +8,12 @@ import ua.payments.model.entity.Card;
 
 import java.util.List;
 
+/**
+ * This service-class is the way to CardDao
+ *
+ * @author Roman Skab
+ * @version 1.0
+ */
 public class CardService {
     private static final Logger logger = LogManager.getLogger(CardService.class);
     DaoFactory daoFactory = DaoFactory.getInstance();

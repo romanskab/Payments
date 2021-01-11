@@ -7,6 +7,12 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+/**
+ * This class gets DataSource
+ *
+ * @author Roman Skab
+ * @version 1.0
+ */
 public class ConnectionPoolHolder {
     private static final Logger logger = LogManager.getLogger(ConnectionPoolHolder.class);
 

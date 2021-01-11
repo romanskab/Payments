@@ -8,6 +8,12 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+/**
+ * This class creates instances of DAO-classes
+ *
+ * @author Roman Skab
+ * @version 1.0
+ */
 public class JDBCDaoFactory extends DaoFactory {
     private static final Logger logger = LogManager.getLogger(JDBCDaoFactory.class);
 

@@ -6,6 +6,12 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Objects;
 
+/**
+ * This class represents Payment of a client
+ *
+ * @author Roman Skab
+ * @version 1.0
+ */
 public class Payment {
     private int id;
     private BigDecimal sum;

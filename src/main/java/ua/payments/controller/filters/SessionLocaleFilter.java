@@ -4,6 +4,12 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
+/**
+ * This class is used for multilingualism
+ *
+ * @author Roman Skab
+ * @version 1.0
+ */
 public class SessionLocaleFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {

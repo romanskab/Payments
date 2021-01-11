@@ -8,6 +8,12 @@ import ua.payments.model.service.CardService;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * This class is used for creating cards of clients.
+ *
+ * @author Roman Skab
+ * @version 1.0
+ */
 public class ClientCreateCardCommand implements Command {
     private static final Logger logger = LogManager.getLogger(ClientCreateCardCommand.class);
 

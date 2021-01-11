@@ -11,6 +11,12 @@ import ua.payments.model.util.Encryptor;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * This class is used for login
+ *
+ * @author Roman Skab
+ * @version 1.0
+ */
 public class LogIn implements Command {
     private static final Logger logger = LogManager.getLogger(LogIn.class);
 

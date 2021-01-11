@@ -6,6 +6,12 @@ import ua.payments.controller.command.Command;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * This class returns basis page of admin
+ *
+ * @author Roman Skab
+ * @version 1.0
+ */
 public class Admin implements Command {
     private static final Logger logger = LogManager.getLogger(Admin.class);
 

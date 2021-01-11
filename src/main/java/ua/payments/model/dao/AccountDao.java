@@ -7,6 +7,12 @@ import ua.payments.model.entity.enums.Status;
 import java.math.BigDecimal;
 import java.util.List;
 
+/**
+ * This interface is for AccountDao-classes
+ *
+ * @author Roman Skab
+ * @version 1.0
+ */
 public interface AccountDao extends GenericDao<Account> {
     void createForClient(int clientId);
 

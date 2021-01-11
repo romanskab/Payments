@@ -12,6 +12,12 @@ import ua.payments.model.service.CardService;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+/**
+ * This class is used for returning accounts' list.
+ *
+ * @author Roman Skab
+ * @version 1.0
+ */
 public class ClientListAccountsCommand implements Command {
     private static final Logger logger = LogManager.getLogger(ClientListAccountsCommand.class);
 

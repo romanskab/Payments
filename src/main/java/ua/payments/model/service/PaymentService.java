@@ -7,6 +7,12 @@ import ua.payments.model.entity.enums.Status;
 
 import java.util.List;
 
+/**
+ * This service-class is the way to PaymentDao
+ *
+ * @author Roman Skab
+ * @version 1.0
+ */
 public class PaymentService {
     DaoFactory daoFactory = DaoFactory.getInstance();
 

@@ -13,6 +13,12 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.stream.Stream;
 
+/**
+ * This filter-class checks users' access to resources
+ *
+ * @author Roman Skab
+ * @version 1.0
+ */
 public class AuthFilter implements Filter {
     private static final Logger logger = LogManager.getLogger(AuthFilter.class);
 
@@ -25,10 +31,8 @@ public class AuthFilter implements Filter {
                          ServletResponse response,
                          FilterChain filterChain) throws IOException, ServletException {
         final HttpServletRequest req = (HttpServletRequest) request;
-        final HttpServletResponse res = (HttpServletResponse) response;
 
         HttpSession session = req.getSession();
-        ServletContext context = request.getServletContext();
 
         String path = req.getRequestURI();
         logger.info("path: " + path);

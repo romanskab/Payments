@@ -8,6 +8,13 @@ import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 import java.util.HashSet;
 
+/**
+ * This class is used for removing of user from context and session
+ * after the end of the session
+ *
+ * @author Roman Skab
+ * @version 1.0
+ */
 public class SessionListener implements HttpSessionListener {
     @Override
     public void sessionDestroyed(HttpSessionEvent se) {

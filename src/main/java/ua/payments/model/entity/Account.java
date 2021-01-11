@@ -6,6 +6,12 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * This class represents Account of a client
+ *
+ * @author Roman Skab
+ * @version 1.0
+ */
 public class Account {
     private long id;
     private BigDecimal balance;

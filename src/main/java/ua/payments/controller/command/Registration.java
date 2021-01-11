@@ -7,6 +7,12 @@ import ua.payments.model.util.Encryptor;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * This class is used for registration of clients
+ *
+ * @author Roman Skab
+ * @version 1.0
+ */
 public class Registration implements Command {
 
     private UserService userService;

@@ -16,6 +16,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class is DAO-class for User-class
+ *
+ * @author Roman Skab
+ * @version 1.0
+ */
 public class JDBCAccountDao implements AccountDao {
     private static final Logger logger = LogManager.getLogger(JDBCAccountDao.class);
 

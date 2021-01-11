@@ -9,6 +9,12 @@ import javax.servlet.jsp.tagext.BodyContent;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 import java.io.IOException;
 
+/**
+ * This class creates tag that represents date and time on jsp-page.
+ *
+ * @author Roman Skab
+ * @version 1.0
+ */
 public class DateTimeTag extends BodyTagSupport {
     private static final Logger logger = LogManager.getLogger(DateTimeTag.class);
 

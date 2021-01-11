@@ -11,6 +11,12 @@ import ua.payments.model.service.PaymentService;
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 
+/**
+ * This class is used for creating new payments.
+ *
+ * @author Roman Skab
+ * @version 1.0
+ */
 public class ClientPaymentCommand implements Command {
     private static final Logger logger = LogManager.getLogger(ClientPaymentCommand.class);
 

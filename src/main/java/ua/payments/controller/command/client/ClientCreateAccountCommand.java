@@ -8,6 +8,12 @@ import ua.payments.model.service.AccountService;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * This class is used for creating accounts of clients.
+ *
+ * @author Roman Skab
+ * @version 1.0
+ */
 public class ClientCreateAccountCommand implements Command {
     private static final Logger logger = LogManager.getLogger(ClientCreateAccountCommand.class);
 

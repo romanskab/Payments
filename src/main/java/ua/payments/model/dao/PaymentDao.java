@@ -6,6 +6,12 @@ import ua.payments.model.entity.enums.Status;
 
 import java.util.List;
 
+/**
+ * This interface is for PaymentDao-classes
+ *
+ * @author Roman Skab
+ * @version 1.0
+ */
 public interface PaymentDao extends GenericDao{
     void create(Payment payment);
 

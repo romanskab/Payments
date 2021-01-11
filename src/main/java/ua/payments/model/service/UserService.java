@@ -8,6 +8,12 @@ import ua.payments.model.entity.enums.State;
 
 import java.util.List;
 
+/**
+ * This service-class is the way to UserDao
+ *
+ * @author Roman Skab
+ * @version 1.0
+ */
 public class UserService {
 
     DaoFactory daoFactory = DaoFactory.getInstance();

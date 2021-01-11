@@ -6,6 +6,12 @@ import ua.payments.model.entity.enums.State;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * This class represents User
+ *
+ * @author Roman Skab
+ * @version 1.0
+ */
 public class User {
     private int id;
     private String firstname;
