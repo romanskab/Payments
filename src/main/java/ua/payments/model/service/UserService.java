@@ -24,16 +24,6 @@ public class UserService {
         }
     }
 
-    public List<User> findAll(){
-        UserDao userDao = daoFactory.createUserDao();
-        return userDao.findAll();
-    }
-
-    public User findByUsername(String username){
-        UserDao userDao = daoFactory.createUserDao();
-        return userDao.findByUsername(username);
-    }
-
     public User findByUsernameAndPassword(String username, String password){
         try (UserDao userDao = daoFactory.createUserDao()) {
             return userDao.findByUsernameAndPassword(username, password);
